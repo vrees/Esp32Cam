@@ -41,29 +41,6 @@
 
 #include "esp_camera.h"
 
-// WROVER-KIT PIN Map
-#ifdef BOARD_WROVER_KIT
-
-#define CAM_PIN_PWDN -1  //power down is not used
-#define CAM_PIN_RESET -1 //software reset will be performed
-#define CAM_PIN_XCLK 21
-#define CAM_PIN_SIOD 26
-#define CAM_PIN_SIOC 27
-
-#define CAM_PIN_D7 35
-#define CAM_PIN_D6 34
-#define CAM_PIN_D5 39
-#define CAM_PIN_D4 36
-#define CAM_PIN_D3 19
-#define CAM_PIN_D2 18
-#define CAM_PIN_D1 5
-#define CAM_PIN_D0 4
-#define CAM_PIN_VSYNC 25
-#define CAM_PIN_HREF 23
-#define CAM_PIN_PCLK 22
-
-#endif
-
 // ESP32Cam (AiThinker) PIN Map
 #ifdef BOARD_ESP32CAM_AITHINKER
 
@@ -133,13 +110,8 @@ static esp_err_t init_camera()
     return ESP_OK;
 }
 
-
-void app_main()
+void take_pictures_successivly()
 {
-    printf("Hello world! ****************************************************************\n");
-    ESP_LOGI(TAG, "Try to init camera ...");
-    init_camera();
-
     while (1)
     {
         ESP_LOGI(TAG, "Taking picture...");
@@ -150,4 +122,13 @@ void app_main()
 
         vTaskDelay(5000 / portTICK_RATE_MS);
     }
+}
+
+void app_main()
+{
+    printf("Starting main program! ****************************************************************\n");
+    ESP_LOGI(TAG, "Try to init camera ...");
+    init_camera();
+
+    take_pictures_successivly();
 }
